@@ -1,0 +1,31 @@
+// UIKit : Override default style
+// font-family: var(--uikit-base-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+html,
+.uk-navbar-nav > li > a {
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--uikit-base-font);
+}
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+    background-color: #FFF;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.uk-navbar-right {
+
+}
+.uk-offcanvas-bar {
+    background-color: var(--offcanvas-background);
+    color: var(--offcanvas-foreground);
+}
+.uk-article-meta {
+    font-size: 1rem;
+}
+.uk-dropdown-nav > li > a {
+    color: #333333;
+}
+.uk-dropdown-nav .uk-nav-header {
+    font-weight: bold;
+}

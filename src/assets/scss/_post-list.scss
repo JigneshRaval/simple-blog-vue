@@ -1,0 +1,146 @@
+/* = Post List
+=============================================*/
+
+.post-list__wrapper {
+	position: fixed;
+	z-index: 7;
+	top: 0;
+	left: -100%;
+	transform: translateX(-100%);
+	width: 25rem;
+	height: 100%;
+	background-color: var(--sidebar-background);
+	will-change: transform;
+	transition: transform 0.3s ease-out, left 0.3s ease;
+
+	.isArticleListPanelOpened & {
+		left:0;
+		transform: translateX(0);
+	}
+
+	> div {
+		overflow: auto;
+		height: 100%;
+
+		/* Custom Scrollbar */
+		&::-webkit-scrollbar {
+			height: 6px;
+			width: 6px;
+		}
+		&::-webkit-scrollbar-thumb { background: #e0d6eb; }
+		&::-webkit-scrollbar-thumb:hover { background: #8c65b3; }
+		&::-webkit-scrollbar-track { background: #f5f3f7; }
+	}
+
+	.message-no-article {
+		align-self: center;
+		color: #FFF;
+		font-size: 1.5em;
+		position: relative;
+		top: 50%;
+	}
+
+	.columns {
+		flex-direction: column;
+	}
+
+	.card {
+		position: relative;
+		padding: 1.5em;
+
+		.card-title {
+			font-size: 1rem;
+		}
+
+		.card-controls {
+			position: absolute;
+			right:0;
+			top: 0;
+		}
+
+		.article-category {
+			font-size: 12px;
+			font-weight: 500;
+			padding: 0;
+			color: #ffffff;
+		}
+	}
+
+	.post-list__tags {
+		font-weight: bold;
+		font-size: 12px;
+		padding: 4px 8px 4px 0;
+		color: var(--sidebar-tags-color);
+	}
+
+	.isFavorite {
+		position: absolute;
+		top: 0;
+			left: 0;
+
+		i.corner {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+			height: 0;
+			border-top: 40px solid white;
+			border-right: 40px solid transparent;
+
+			&::after {
+				content: '';
+				box-shadow: 0 5px 5px rgba(0,0,0,0.4);
+			}
+		}
+
+		.ion-ios-star {
+			position: relative;
+		}
+	}
+
+	.uk-card-default {
+		box-shadow: none;
+		background-color: transparent;
+		border-bottom: 1px solid rgba(255,255,255, 0.3);
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			width: 4px;
+			height: 100%;
+			left:0;
+			top: 50%;
+			transform: translateY(-50%) scale(0);
+			background-color: #FFF;
+			transition: height 0.3s ease-out, transform 0.3s ease-out;
+		}
+
+		&:hover::before,
+		&.active::before {
+			transform: translateY(-50%) scale(1);
+			height: 100%;
+		}
+	}
+
+	.uk-card-title {
+		font-size: 20px;
+		margin: 0;
+		font-weight: normal;
+    	padding: 0.5em 0 0 0;
+
+		a {
+			display: block;
+			color: var(--sidebar-link-color);
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.uk-button {
+		padding: 5px;
+		color: var(--sidebar-tags-color);
+	}
+}

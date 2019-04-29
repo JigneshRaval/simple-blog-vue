@@ -1,0 +1,33 @@
+/* Scroll to top functionality
+===================================================*/
+.scroll-top {
+    position: fixed;
+    right: 2%;
+    bottom: 5%;
+    padding: 4px 16px;
+    display: inline-block;
+    color: #000;
+    background: #FFF;
+    border: 1px solid #CCC;
+    z-index: 2600;
+    font-size: 32px;
+    font-weight: bold;
+    border-radius: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    box-shadow: 0 18px 37px -7px rgba(39, 60, 77, 0.3);
+}
+.scroll-top:hover,
+.scroll-top:active,
+.scroll-top:focus {
+    color: #FFF !important;
+    text-decoration: none !important;
+    background: #222f3e;
+    border-color: #222f3e;
+}
+
+.scroll-top.isVisible {
+    visibility: visible;
+    opacity: 1;
+}

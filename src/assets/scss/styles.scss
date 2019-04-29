@@ -1,0 +1,97 @@
+html {
+	/* font-size: 16px; */
+	height: 100%;
+}
+
+body {
+	background-color: var(--body-bg);
+	color: var(--content-foreground);
+	font-size: 16px;
+	font-size: var(--base-font-size, 16px);
+	line-height: var(--base-line-height, 1.5);
+	transition: background 0.3s linear;
+}
+
+body.showVerticalGrid {
+	background-image: linear-gradient(#d3d1d1 1px, transparent 1px);
+	background-size: 100% 8px;
+	background-position-y: -1px;
+}
+td, th {
+	/* font-family: var(--base-font, 'Open Sans') */
+	color: var(--table-content-foreground);
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--title-font);
+	font-weight: bold;
+	color: var(--content-heading-color);
+}
+.container-fluid {
+	margin: 0;
+	padding: 0;
+}
+
+.html-to-markdown-convertor {
+	width: 80%;
+    margin: 2em auto;
+
+	#formHtmltoMd {
+		label {
+			font-weight: bold;
+		}
+	}
+}
+
+#modal-example {
+
+	.uk-modal-body {
+		padding: 30px 5%;
+	}
+}
+
+#formCreateEditArticle {
+	label {
+		font-weight: bold;
+	}
+}
+
+.small-dot {
+	display: inline-block;
+	height: 8px;
+	width: 8px;
+	margin-right: 1rem;
+	background-color: #FFF;
+	border-radius: 100px;
+
+	&[data-category="bash"] {
+		background-color: #363377;
+	}
+
+	&[data-category="php"] {
+		background-color: #6c7eb7;
+	}
+
+	&[data-category="html"] {
+		background-color: #f26428;
+	}
+
+	&[data-category="css"] {
+		background-color: #2caddd;
+	}
+
+	&[data-category="sass"] {
+		background-color: #cc6798;
+	}
+
+	&[data-category="javascript"] {
+		background-color: #ffe725;
+	}
+
+	&[data-category="typescript"] {
+		background-color: #2170c4;
+	}
+}
+.select {
+    height:100px;
+    overflow:scroll;
+}

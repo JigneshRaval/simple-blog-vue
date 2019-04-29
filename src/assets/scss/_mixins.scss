@@ -1,0 +1,411 @@
+/*--------------------------------------------------*\
+  #MIXINS [ SCSS Mixins ]
+\*--------------------------------------------------*/
+
+
+@function remy($pxsize, $rembase: $sg-base-font-size) {
+    /* if unit is not provided */
+    @if (unitless($pxsize)) {
+        $pxsize: $pxsize * 1px;
+    }
+
+    @return ($pxsize / $rembase)+rem;
+}
+
+@mixin fontSize($size) {
+    font-size: $size; /* Fallback in px */
+    font-size: remy($size);
+}
+
+
+/* = Function to convert PX to REM
+====================================================*/
+@function calcRem($pxsize, $rembase: $base-font-size) {
+	/* if unit is not provided */
+	@if (unitless($pxsize)) {
+		$pxsize: $pxsize * 1px;
+	}
+
+	@if (unitless($rembase)) {
+		$rembase: $rembase * 1px;
+	}
+
+	@return ($pxsize / $rembase)+rem;
+}
+
+
+/* = Function to convert PX to EM
+====================================================*/
+@function calcEm($pixels, $context: $base-font-size) {
+	@if (unitless($pixels)) {
+		$pixels: $pixels * 1px;
+	}
+
+	@if (unitless($context)) {
+		$context: $context * 1px;
+	}
+
+	@return $pixels / $context * 1em;
+}
+
+/* = Mixin to apply font-size with
+	fallback in pixels
+====================================================*/
+@mixin fontSize($size) {
+	font-size: $size; /* Fallback in px */
+	font-size: calcRem($size);
+}
+
+@mixin responsive-types($fontSize, $lineHeight: 1.5, $fontWeight : 'normal') {
+	@include fontSize($fontSize);
+	line-height: $lineHeight;
+	font-weight: unquote($fontWeight);
+}
+
+/* = Function to apply paddings in REM
+====================================================*/
+@function paddings($pads...) {
+	$finalString: "";
+
+	@each $value in $pads {
+		$remValue: calcRem($value);
+		$finalString: '#{$finalString} #{$remValue}';
+	}
+
+	@return unquote($finalString);
+}
+
+/* = Function to apply margins in REM
+====================================================*/
+@function margins($margins...) {
+	$finalString: "";
+
+	@each $value in $margins {
+		$remValue: calcRem($value);
+		$finalString: '#{$finalString} #{$remValue}';
+	}
+
+	@return unquote($finalString);
+}
+
+/* = Clearfix
+====================================================*/
+@mixin clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+/* = Position
+====================================================*/
+/**
+	* Usage:
+	* @include relative;
+	@include absolute(top 100% left 0);
+	@include fixed(top 0 left 0);
+*/
+@mixin position($position, $args) {
+	@each $o in top right bottom left {
+		$i: index($args, $o);
+		@if $i and $i + 1 <= length($args) and type-of(nth($args, $i + 1)) == number {
+			#{$o}: nth($args, $i + 1);
+		}
+	}
+
+	position: $position;
+}
+
+// Positioning helpers
+@mixin absolute($args: '') {
+	@include position(absolute, $args);
+}
+
+@mixin fixed($args: '') {
+	@include position(fixed, $args);
+}
+
+@mixin relative($args: '') {
+  @include position(relative, $args);
+}
+
+/* = Absolute Positioned
+====================================================*/
+@mixin abs-pos($top: auto, $right: auto, $bottom: auto, $left: auto) {
+	top: $top;
+	right: $right;
+	bottom: $bottom;
+	left: $left;
+	position: absolute;
+}
+
+/* = Only display content to screen readers
+  See: http://a11yproject.com/posts/how-to-hide-content
+====================================================*/
+@mixin sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}
+
+/* = Use in conjunction with .sr-only to only display content when it's focused.
+	Useful for "Skip to main content" links;
+	see https://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+====================================================*/
+@mixin sr-only-focusable {
+	&:active,
+	&:focus {
+		position: static;
+		width: auto;
+		height: auto;
+		margin: 0;
+		overflow: visible;
+		clip: auto;
+	}
+}
+
+/* = Box Sizing
+====================================================*/
+/**
+	* Reset your elements box model with ease.
+*/
+@mixin box-sizing($box-model) {
+	-webkit-box-sizing: $box-model; // Safari <= 5
+	-moz-box-sizing: $box-model; // Firefox <= 19
+	box-sizing: $box-model;
+}
+
+/* = Text Overflow
+====================================================*/
+/**
+	* An easy way to truncate text with an ellipsis.
+	* Requires the element to be block or inline-block.
+*/
+@mixin text-truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* = Opacity
+====================================================*/
+@mixin opacity($opacity) {
+	opacity: $opacity;
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity = $opacity-ie); //IE8
+}
+
+/* = Vertical centering
+====================================================*/
+@mixin center-vertically {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	@include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+}
+
+/* = Vendor prefixing
+====================================================*/
+/**
+	* USAGE:
+	* html {
+	@include prefix('box-sizing', 'border-box', moz webkit);
+	}
+*/
+@mixin prefix($property, $value, $vendors: webkit moz ms o, $default: true) {
+	@if $vendors {
+		@each $vendor in $vendors {
+			#{"-" + $vendor + "-" + $property}: #{$value};
+		}
+	}
+
+	@if $default {
+		#{$property}: #{$value};
+	}
+}
+
+/* = Border Radius
+====================================================*/
+@mixin border-radius($radius...) {
+	border-radius: $radius;
+}
+
+/* = Box-Shadow
+====================================================*/
+@mixin box-shadow($shadow...) {
+	box-shadow: $shadow;
+}
+
+/* = CSS Arrow
+====================================================*/
+@mixin css-arrow($arrowSize, $arrowColor, $margin, $side, $align) {
+	@if $side == "top" {
+		border-bottom-color: $arrowColor;
+		top: -2 * $arrowSize;
+	}
+	@if $side == "bottom" {
+		border-top-color: $arrowColor;
+		bottom: -2 * $arrowSize;
+	}
+	@if $side == "left" {
+		border-right-color: $arrowColor;
+		left: -2 * $arrowSize;
+	}
+	@if $side == "right" {
+		border-left-color: $arrowColor;
+		right: -2 * $arrowSize;
+	}
+
+	@if $side == "right" or $side == "left" {
+		@if $align == "center" {
+			top: 50%;
+			margin-top: -$arrowSize;
+		}
+		@else if $align == "top" {
+			top: $margin;
+		}
+		@else if $align == "bottom" {
+			bottom: $margin;
+		}
+	}
+
+	@if $side == "bottom" or $side == "top" {
+		@if $align == "center" {
+			right: 50%;
+			margin-right: -$arrowSize;
+		}
+		@else if $align == "left" {
+			left: $margin;
+		}
+		@else if $align == "right" {
+			right: $margin;
+		}
+	}
+}
+
+@mixin arrow($side: "right", $align: "center", $size: 20px, $color: #f6f6f6, $borderColor: "none", $borderSize: 3px) {
+	$selector: "&:after, &:before";
+
+	@if $borderColor == "none" {
+		$selector: "&:after";
+	}
+	#{$selector} {
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		visibility: visible;
+	}
+
+	&:after {
+		border-width: $size;
+		@include css-arrow($size, $color, $size, $side, $align);
+	}
+
+	@if $borderColor != "none" {
+		&:before {
+			border-width: $borderSize + $size;
+			@include css-arrow($size + $borderSize, $borderColor, $size - $borderSize, $side, $align);
+		}
+	}
+}
+
+// pulls carrot arrow options small/large : black/grey/white : up/down/left/right
+@mixin imageArrow($size:small, $arrowColor:white, $arrowDirection:down) {
+	background-image:url(/images/al-images/al-#{$size}-arrow/#{$arrowColor}-#{$arrowDirection}.png);
+	background-repeat: no-repeat;
+}
+
+// this Mixin allows you to add in a arrow on the top of a box.
+// @include arrowTop() <-- adds plain white borderless arrow to item in the top left corner
+// @include arrowTop(40%) <-- adds a plain white borderless arrow that is 40% from the left corner of the page on the top
+// @include arrowTop($positionLeft:2px,$backgroundColor:#FFF, $borderWidth:false, $borderColor:false, $arrowWidth:10px)
+@mixin arrowTop($positionLeft:2px, $backgroundColor:#FFF, $borderWidth:0, $borderColor:false, $arrowWidth:10px ){
+	&.al-css-arrow{
+		background-color: $backgroundColor;
+		//border: $borderWidth solid $borderColor;
+
+		$var :$borderWidth+$arrowWidth;
+		position: relative;
+
+		&:after{
+			display:block;
+			/* generic */
+			content: ' ';
+			position: absolute;
+
+			/* position */
+			top: (-2 * $arrowWidth)- $borderWidth;
+			left:$positionLeft;
+
+			/* border */
+			border-width:$var;
+			border-style:solid;
+			border-color:transparent;
+
+			border-bottom-color: $backgroundColor;
+		}
+		@if $borderColor == false {}
+		@else{
+			&:before{
+				display:block;
+				z-index:0; /*for Gecko browsers  that put it infront of the real item*/
+				/* generic */
+				content: ' ';
+				position: absolute;
+
+				/* position */
+				top:(-2 * $arrowWidth)- (2 * $borderWidth);
+				left:$positionLeft;
+
+				/* border */
+				border-width:$var;
+				border-style:solid;
+				border-color:transparent;
+
+				border-bottom-color: $borderColor;
+			}
+		}
+	}
+}
+
+/* = gradient filter
+====================================================*/
+@mixin ie-linear-gradient($start-color, $end-color) {
+	filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr='#{$start-color}', endColorstr='#{$end-color}')";
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-color}', endColorstr='#{$end-color}')";
+}
+
+@mixin total-gradient($start-color:#FFF, $end-color:#000){
+	@include ie-linear-gradient($start-color, $end-color);
+	@include background-image(linear-gradient($start-color, $end-color));
+}
+
+/* = Transitions
+====================================================*/
+@mixin transition($transition...) {
+	transition: $transition;
+}
+@mixin transition-property($transition-property...) {
+	transition-property: $transition-property;
+}
+@mixin transition-delay($transition-delay) {
+	transition-delay: $transition-delay;
+}
+@mixin transition-duration($transition-duration...) {
+	transition-duration: $transition-duration;
+}
+@mixin transition-timing-function($timing-function) {
+	transition-timing-function: $timing-function;
+}
+@mixin transition-transform($transition...) {
+	transition: transform $transition;
+}

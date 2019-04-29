@@ -1,0 +1,81 @@
+// main.scss
+
+@import './variables';
+@import './_mixins';
+// Custom font face
+@import './fonts';
+
+/*= THEMES ( Light, Dark, Solarized )
+==================================================*/
+@import './_themes/theme-solarized-dark';
+@import './_themes/theme-solarized';
+@import './_themes/theme-dark';
+@import './_themes/theme-light';
+
+
+/*= VENDOR CSS ( THIRD PARTY PLUGINS )
+==================================================*/
+
+// ionicons : https://ionicons.com/
+// https://unpkg.com/ionicons@4.4.7/dist
+@import './vendors/ionicons.css';
+
+// summernote : Super Simple WYSIWYG Editor on Bootstrap
+// https://summernote.org/
+@import './vendors/summernote-lite.css';
+
+:root {
+    --uikit-base-font: 'Product Sans', Arial, sans-serif;
+    --uikit-system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+}
+
+// UIKit : https://getuikit.com/
+@import './vendors/uikit/uikit.css';
+/* 1. Your custom variables and variable overwrites. */
+$global-link-color: #DA7D02;
+
+/* 2. Import default variables and available mixins. */
+@import "./vendors/uikit/variables-theme.scss";
+@import "./vendors/uikit/mixins.scss";
+
+/* 3. Your custom mixin overwrites. */
+/* @mixin hook-card() { color: #000; } */
+
+/* 4. Import UIkit. */
+@import "./vendors/uikit/uikit.scss";
+
+/* 5. Import to override UIkit. */
+@import "./vendors/uikit/uikit-override.scss";
+
+
+// Highlight.js for Syntax highlighting
+// https://highlightjs.org/
+@import './highlight-themes/solarized-dark';
+@import './highlight-themes/solarized-light';
+@import './highlight-themes/tomorrow-night-bright';
+
+
+// Bootstrap 4.1
+// @import './bootstrap.min.css';
+
+
+// Spectre.css : https://picturepan2.github.io/spectre/index.html
+/* @import './spectre.min.css';
+@import './spectre-exp.min.css';
+@import './spectre-icons.min.css';
+@import './spectre-override'; */
+
+
+/*= COMPONENT CSS
+==================================================*/
+
+@import './utils';
+@import './_healpers';
+@import './_categories-color';
+@import './_header';
+@import './_sidebar';
+@import './_post-list';
+@import './_footer';
+@import './_article';
+@import './_pagination';
+@import './styles';
